@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import {FEED_QUERY} from './LinkList';
+import { LINKS_PER_PAGE } from '../constant';
 
 const CreateLink = props => {
 
@@ -47,13 +48,22 @@ const CreateLink = props => {
       <Mutation 
         mutation={POST_MUTATION} 
         variables={{description, url}} 
-        onCompleted={() => props.history.push('/')}
+        onCompleted={() => props.history.push('/new/1')}
         update={(store, {data: {post}}) => {
-          const data = store.readQuery({query: FEED_QUERY})
+          const first = LINKS_PER_PAGE;
+          const skip = 0;
+          const orderBy = 'createdAt_DESC';
+
+          const data = store.readQuery(
+            {
+              query: FEED_QUERY,
+              variables: { first, skip, orderBy}
+            })
           data.feed.links.unshift(post)
           store.writeQuery({
             query: FEED_QUERY,
-            data
+            data,
+            variables: {first, skip, orderBy}
           })
         }}
         >

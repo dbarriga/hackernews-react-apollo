@@ -87,7 +87,10 @@ const Login = withRouter(({history}) => {
         <Mutation 
           mutation={login ? LOGIN_MUTATION : SIGNUP_MUTATION}
           variables={{email, password, name}}
-          onCompleted={data =>{return _confirm(data)}}
+          onCompleted={data =>{
+            console.log(data);
+            return _confirm(data)
+          }}
           >
             {mutation => (
               <div className="pointer mr2 button" onClick={mutation}>

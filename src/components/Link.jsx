@@ -18,9 +18,9 @@ const Link = ({link, index, updateStoreAfterVote}) => {
               id
             }
           }
-          user {
-            id
-          }
+        }
+        user {
+          id
         }
       }
     }
